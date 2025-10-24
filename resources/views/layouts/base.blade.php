@@ -327,6 +327,12 @@
                     <span>Dashboard</span>
                 </a>
             </div>
+            <div class="sidebar-item">
+                <a href="{{ route('products.index') }}" class="sidebar-link">
+                    <i class="bi bi-house-door"></i>
+                    <span>Products</span>
+                </a>
+            </div>
         </nav>
     </aside>
     @endauth
@@ -347,8 +353,10 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
         @endif
-
+        <div class="container">
         @yield('content')
+        </div>
+       
     </main>
 
     <!-- Footer -->

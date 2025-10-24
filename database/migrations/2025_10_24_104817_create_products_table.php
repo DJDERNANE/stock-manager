@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('quantity')->default(0);
             $table->integer('min_stock_level')->default(0);
             $table->text('image_url')->nullable();
-            $table->foreignUuid('created_by')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('created_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

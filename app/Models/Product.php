@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -38,5 +39,16 @@ class Product extends Model
     public function isLowStock(): bool
     {
         return $this->quantity <= $this->min_stock_level;
+    }
+
+    public function getStockStatusAttribute(): string
+    {
+        if ($this->quantity <= 0) {
+            return 'Out of stock';
+        } elseif ($this->quantity <= $this->min_stock_level) {
+            return 'Low';
+        } else {
+            return 'In stock';
+        }   
     }
 }

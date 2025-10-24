@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('stock_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignUuid('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->enum('adjustment_type', [
                 'purchase',     // Achat de stock
                 'sale',         // Vente
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->integer('quantity_before');
             $table->integer('quantity_change');
             $table->integer('quantity_after');
-            $table->foreignUuid('changed_by')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('changed_by')->nullable()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
