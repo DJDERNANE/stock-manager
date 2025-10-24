@@ -288,6 +288,12 @@
                         <i class="bi bi-pencil"></i>
                     </button>
                     </a>
+
+                    <a href="{{ route('products.history', $product->id) }}">
+                    <button class="action-btn btn-edit" title="Edit">
+                        <i class="bi bi-clock-history"></i>
+                    </button>
+                    </a>
                   
                     <button class="action-btn btn-delete" title="Delete"
                             data-bs-toggle="modal" 
@@ -346,7 +352,7 @@
 <div class="modal fade" id="restockModal" tabindex="-1" aria-labelledby="restockModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="restockForm" method="POST">
+            <form id="restockForm" method="POST" action="">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="restockModalLabel">

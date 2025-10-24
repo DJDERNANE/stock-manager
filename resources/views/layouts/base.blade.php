@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,10 +10,10 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    
+
     <!-- Custom CSS -->
     <style>
         :root {
@@ -33,7 +34,7 @@
         .topbar {
             height: var(--topbar-height);
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
             left: 0;
@@ -64,7 +65,7 @@
             overflow-y: auto;
             transition: transform 0.3s ease;
             z-index: 1020;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .sidebar::-webkit-scrollbar {
@@ -82,7 +83,7 @@
 
         .sidebar-header {
             padding: 1.5rem 1rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .sidebar-menu {
@@ -131,14 +132,14 @@
 
         /* User Dropdown */
         .user-dropdown {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             padding: 0.4rem 1rem;
             transition: all 0.3s;
         }
 
         .user-dropdown:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .user-dropdown .dropdown-toggle {
@@ -167,7 +168,7 @@
 
         /* Mobile Toggle */
         .sidebar-toggle {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
             padding: 0.5rem 0.75rem;
@@ -177,7 +178,7 @@
         }
 
         .sidebar-toggle:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Mobile Responsive */
@@ -200,7 +201,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background: rgba(0,0,0,0.5);
+                background: rgba(0, 0, 0, 0.5);
                 z-index: 1010;
                 display: none;
             }
@@ -214,7 +215,7 @@
         .content-card {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             padding: 1.5rem;
             margin-bottom: 1.5rem;
         }
@@ -244,9 +245,10 @@
             text-decoration: none;
         }
     </style>
-    
+
     @stack('styles')
 </head>
+
 <body>
     <!-- Topbar -->
     <nav class="topbar navbar navbar-expand-lg">
@@ -254,54 +256,56 @@
             <button class="sidebar-toggle d-lg-none me-3" onclick="toggleSidebar()">
                 <i class="bi bi-list"></i>
             </button>
-            
+
             <a class="navbar-brand" href="{{ url('/') }}">
                 <i class="bi bi-layers me-2"></i>{{ config('app.name', 'Laravel') }}
             </a>
-            
+
             <div class="ms-auto">
                 <ul class="navbar-nav">
                     @auth
-                        <li class="nav-item dropdown user-dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <div class="user-avatar">
-                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                                </div>
-                                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end shadow-lg">
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bi bi-person me-2"></i>Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <i class="bi bi-gear me-2"></i>Settings
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item text-danger">
-                                            <i class="bi bi-box-arrow-right me-2"></i>Logout
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
+                    <li class="nav-item dropdown user-dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <div class="user-avatar">
+                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                            </div>
+                            <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-person me-2"></i>Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-gear me-2"></i>Settings
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                     @else
-                        <li class="nav-item">
-                            <a class="btn btn-light btn-sm me-2" href="{{ route('login-form') }}">
-                                <i class="bi bi-box-arrow-in-right me-1"></i>Login
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-outline-light btn-sm" href="{{ route('signup-form') }}">
-                                <i class="bi bi-person-plus me-1"></i>Register
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="btn btn-light btn-sm me-2" href="{{ route('login-form') }}">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-light btn-sm" href="{{ route('signup-form') }}">
+                            <i class="bi bi-person-plus me-1"></i>Register
+                        </a>
+                    </li>
                     @endauth
                 </ul>
             </div>
@@ -311,6 +315,7 @@
     <!-- Sidebar Overlay for Mobile -->
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 
+
     <!-- Sidebar -->
     @auth
     <aside class="sidebar" id="sidebar">
@@ -319,23 +324,24 @@
                 Navigation
             </h6>
         </div>
-        
+
         <nav class="sidebar-menu">
             <div class="sidebar-item">
-                <a href="{{ route('dashboard') }}" class="sidebar-link active">
+                <a href="{{ route('dashboard') }}" class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <i class="bi bi-house-door"></i>
                     <span>Dashboard</span>
                 </a>
             </div>
             <div class="sidebar-item">
-                <a href="{{ route('products.index') }}" class="sidebar-link">
-                    <i class="bi bi-house-door"></i>
+                <a href="{{ route('products.index') }}" class="sidebar-link {{ request()->routeIs('products.*') ? 'active' : '' }}">
+                <i class="bi bi-box-seam"></i>
                     <span>Products</span>
                 </a>
             </div>
         </nav>
     </aside>
     @endauth
+
 
     <!-- Main Content -->
     <main class="main-content">
@@ -354,9 +360,9 @@
         </div>
         @endif
         <div class="container">
-        @yield('content')
+            @yield('content')
         </div>
-       
+
     </main>
 
     <!-- Footer -->
@@ -378,13 +384,13 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-    
+
     <!-- Custom JS -->
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.querySelector('.sidebar-overlay');
-            
+
             if (sidebar && overlay) {
                 sidebar.classList.toggle('show');
                 overlay.classList.toggle('show');
@@ -409,7 +415,8 @@
             });
         }, 5000);
     </script>
-    
+
     @stack('scripts')
 </body>
+
 </html>
