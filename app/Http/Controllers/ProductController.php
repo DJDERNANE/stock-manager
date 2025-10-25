@@ -16,9 +16,19 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::where("created_by", Auth::id())->paginate(15);
+
+        $query = Product::where("created_by", Auth::id());
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                  ->orWhere('sku', 'LIKE', "%{$search}%");
+            });
+        }
+        
+        $products = $query->paginate(15);;
         return view('dashboard.products.index', compact('products'));
     }
 

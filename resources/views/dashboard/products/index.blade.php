@@ -191,15 +191,87 @@
         margin-bottom: 0.5rem;
     }
 
-    .form-control, .form-select {
+    .form-control,
+    .form-select {
         border-radius: 8px;
         border: 1px solid #e2e8f0;
         padding: 0.75rem;
     }
 
-    .form-control:focus, .form-select:focus {
+    .form-control:focus,
+    .form-select:focus {
         border-color: #667eea;
         box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .pagination {
+        margin: 0;
+    }
+
+    .page-link {
+        border: 1px solid #e2e8f0;
+        color: #64748b;
+        padding: 0.5rem 0.75rem;
+        margin: 0 0.1rem;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.2s;
+        min-width: 42px;
+        text-align: center;
+    }
+
+    .page-link:hover {
+        background-color: #f1f5f9;
+        border-color: #cbd5e1;
+        color: #475569;
+        transform: translateY(-1px);
+    }
+
+    .page-item.active .page-link {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: white;
+        box-shadow: 0 2px 4px rgba(13, 110, 253, 0.3);
+    }
+
+    .page-item.disabled .page-link {
+        background-color: #f8fafc;
+        border-color: #e2e8f0;
+        color: #94a3b8;
+        cursor: not-allowed;
+    }
+
+    .page-link i {
+        font-size: 0.875rem;
+    }
+
+    /* Mobile responsive pagination */
+    @media (max-width: 576px) {
+        .pagination {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .page-link {
+            padding: 0.4rem 0.6rem;
+            margin: 0.1rem;
+            font-size: 0.875rem;
+            min-width: 36px;
+        }
+
+        .table-header .d-flex {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .table-header .text-muted {
+            order: 2;
+        }
+
+        .table-header nav {
+            order: 1;
+        }
     }
 </style>
 
@@ -207,19 +279,22 @@
     <div class="table-header">
         <div class="row align-items-center">
             <div class="col-md-6 mb-3 mb-md-0">
-                <div class="search-box">
-                    <i class="bi bi-search"></i>
-                    <input type="text" class="form-control" placeholder="Search products...">
-                </div>
+                <form method="GET" action="{{ route('products.index') }}" id="searchForm" class="search-form">
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text"
+                            class="form-control"
+                            id="searchInput"
+                            name="search"
+                            placeholder="Search products..."
+                            value="{{ request('search') }}"
+                            onkeypress="handleKeyPress(event)">
+                    </div>
+                </form>
             </div>
             <div class="col-md-6">
                 <div class="d-flex gap-2 justify-content-md-end items-center">
-                    <select class="filter-select">
-                        <option>All Status</option>
-                        <option>In Stock</option>
-                        <option>Low Stock</option>
-                        <option>Out of Stock</option>
-                    </select>
+                  
 
                     <a href="{{ route('products.create') }}">
                         <button class="btn btn-primary border-0 py-2 px-4">
@@ -261,7 +336,7 @@
                 </td>
                 <td><span class="price">{{$product->purchase_price}}</span></td>
                 <td>{{$product->quantity}} units</td>
-                <td> 
+                <td>
                     <span class="badge-status 
                         @if($product->stock_status === 'Out of stock')
                             badge-out-stock
@@ -275,31 +350,31 @@
                     </span>
                 </td>
                 <td>
-                    <button class="action-btn btn-restock" title="Adjust Stock" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#restockModal"
-                            data-product-id="{{ $product->id }}"
-                            data-product-name="{{ $product->name }}"
-                            data-product-quantity="{{ $product->quantity }}">
+                    <button class="action-btn btn-restock" title="Adjust Stock"
+                        data-bs-toggle="modal"
+                        data-bs-target="#restockModal"
+                        data-product-id="{{ $product->id }}"
+                        data-product-name="{{ $product->name }}"
+                        data-product-quantity="{{ $product->quantity }}">
                         <i class="bi bi-box-seam"></i>
                     </button>
                     <a href="{{ route('products.edit', $product->id) }}">
-                    <button class="action-btn btn-edit" title="Edit">
-                        <i class="bi bi-pencil"></i>
-                    </button>
+                        <button class="action-btn btn-edit" title="Edit">
+                            <i class="bi bi-pencil"></i>
+                        </button>
                     </a>
 
                     <a href="{{ route('products.history', $product->id) }}">
-                    <button class="action-btn btn-edit" title="Edit">
-                        <i class="bi bi-clock-history"></i>
-                    </button>
+                        <button class="action-btn btn-edit" title="Edit">
+                            <i class="bi bi-clock-history"></i>
+                        </button>
                     </a>
-                  
+
                     <button class="action-btn btn-delete" title="Delete"
-                            data-bs-toggle="modal" 
-                            data-bs-target="#deleteModal"
-                            data-product-id="{{ $product->id }}"
-                            data-product-name="{{ $product->name }}">
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal"
+                        data-product-id="{{ $product->id }}"
+                        data-product-name="{{ $product->name }}">
                         <i class="bi bi-trash"></i>
                     </button>
                 </td>
@@ -314,10 +389,81 @@
                 Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} products
             </div>
             <nav>
-                {{ $products->links() }}
+                <ul class="pagination mb-0">
+                    {{-- Previous Page Link --}}
+                    @if ($products->onFirstPage())
+                    <li class="page-item disabled">
+                        <span class="page-link">
+                            <i class="bi bi-chevron-left"></i>
+                        </span>
+                    </li>
+                    @else
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $products->previousPageUrl() }}" rel="prev">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+                    @endif
+
+                    {{-- Pagination Elements --}}
+                    @php
+                    $current = $products->currentPage();
+                    $last = $products->lastPage();
+                    $start = max($current - 2, 1);
+                    $end = min($current + 2, $last);
+                    @endphp
+
+                    @if($start > 1)
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $products->url(1) }}">1</a>
+                    </li>
+                    @if($start > 2)
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                    @endif
+                    @endif
+
+                    @for ($i = $start; $i <= $end; $i++)
+                        @if ($i==$current)
+                        <li class="page-item active">
+                        <span class="page-link">{{ $i }}</span>
+                        </li>
+                        @else
+                        <li class="page-item">
+                            <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
+                        </li>
+                        @endif
+                        @endfor
+
+                        @if($end < $last)
+                            @if($end < $last - 1)
+                            <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                            </li>
+                            @endif
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $products->url($last) }}">{{ $last }}</a>
+                            </li>
+                            @endif
+
+                            {{-- Next Page Link --}}
+                            @if ($products->hasMorePages())
+                            <li class="page-item">
+                                <a class="page-link" href="{{ $products->nextPageUrl() }}" rel="next">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                            @else
+                            <li class="page-item disabled">
+                                <span class="page-link">
+                                    <i class="bi bi-chevron-right"></i>
+                                </span>
+                            </li>
+                            @endif
+                </ul>
             </nav>
         </div>
-        
     </div>
 </div>
 
@@ -366,7 +512,7 @@
                         <label class="form-label">Product</label>
                         <input type="text" class="form-control" id="restockProductName" readonly>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label class="form-label">Current Stock</label>
                         <input type="text" class="form-control" id="restockCurrentQuantity" readonly>
@@ -377,7 +523,7 @@
                         <select class="form-select" id="adjustment_type" name="adjustment_type" required>
                             <option value="">Select adjustment type</option>
                             @foreach(\App\Models\StockHistory::getAdjustmentTypes() as $key => $label)
-                                <option value="{{ $key }}">{{ $label }}</option>
+                            <option value="{{ $key }}">{{ $label }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -414,14 +560,14 @@
 <script>
     // Delete Modal
     const deleteModal = document.getElementById('deleteModal');
-    deleteModal.addEventListener('show.bs.modal', function (event) {
+    deleteModal.addEventListener('show.bs.modal', function(event) {
         const button = event.relatedTarget;
         const productId = button.getAttribute('data-product-id');
         const productName = button.getAttribute('data-product-name');
-        
+
         const deleteProductName = document.getElementById('deleteProductName');
         const deleteForm = document.getElementById('deleteForm');
-        
+
         deleteProductName.textContent = productName;
         deleteForm.action = `/products/${productId}`;
     });
@@ -429,23 +575,23 @@
     // Restock Modal
     const restockModal = document.getElementById('restockModal');
     let currentQuantity = 0;
-    
+
     // Increase types from StockHistory model
     const increaseTypes = ['purchase', 'return', 'transfer_in', 'correction'];
     const decreaseTypes = ['sale', 'damage', 'loss', 'transfer_out', 'correction'];
-    
-    restockModal.addEventListener('show.bs.modal', function (event) {
+
+    restockModal.addEventListener('show.bs.modal', function(event) {
         const button = event.relatedTarget;
         const productId = button.getAttribute('data-product-id');
         const productName = button.getAttribute('data-product-name');
         const productQuantity = button.getAttribute('data-product-quantity');
-        
+
         currentQuantity = parseInt(productQuantity);
-        
+
         const restockProductName = document.getElementById('restockProductName');
         const restockCurrentQuantity = document.getElementById('restockCurrentQuantity');
         const restockForm = document.getElementById('restockForm');
-        
+
         restockProductName.value = productName;
         restockCurrentQuantity.value = productQuantity + ' units';
         restockForm.action = `/products/${productId}/restock`;
@@ -457,10 +603,10 @@
         const quantityChange = parseInt(document.getElementById('quantity_change').value) || 0;
         const newQuantityPreview = document.getElementById('newQuantityPreview');
         const newQuantityValue = document.getElementById('newQuantityValue');
-        
+
         if (adjustmentType && quantityChange > 0) {
             let newQuantity;
-            
+
             // Determine if increase or decrease based on adjustment type
             if (increaseTypes.includes(adjustmentType)) {
                 newQuantity = currentQuantity + quantityChange;
@@ -476,22 +622,45 @@
                     newQuantityPreview.querySelector('.alert').className = 'alert alert-warning mb-0';
                 }
             }
-            
+
             newQuantityValue.textContent = newQuantity;
             newQuantityPreview.style.display = 'block';
         } else {
             newQuantityPreview.style.display = 'none';
         }
     }
-    
+
     // Add event listeners
     document.getElementById('adjustment_type').addEventListener('change', calculateNewQuantity);
     document.getElementById('quantity_change').addEventListener('input', calculateNewQuantity);
 
     // Reset form when modal is closed
-    restockModal.addEventListener('hidden.bs.modal', function () {
+    restockModal.addEventListener('hidden.bs.modal', function() {
         document.getElementById('restockForm').reset();
         document.getElementById('newQuantityPreview').style.display = 'none';
+    });
+
+    function handleKeyPress(event) {
+        // Check if the pressed key is Enter (key code 13)
+        if (event.keyCode === 13 || event.which === 13) {
+            event.preventDefault(); // Prevent default form submission behavior
+            document.getElementById('searchForm').submit();
+        }
+    }
+
+    // Alternative approach using event listener (recommended)
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const searchForm = document.getElementById('searchForm');
+
+        if (searchInput && searchForm) {
+            searchInput.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    searchForm.submit();
+                }
+            });
+        }
     });
 </script>
 
