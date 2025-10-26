@@ -31,7 +31,7 @@
             </button>
 
             <a class="navbar-brand" href="{{ url('/') }}">
-                <i class="bi bi-layers me-2"></i>{{ config('app.name', 'Stock Manager') }}
+                <i class="bi bi-layers me-2"></i>Stock Manager
             </a>
 
             <div class="ms-auto">
@@ -68,17 +68,7 @@
                             </li>
                         </ul>
                     </li>
-                    @else
-                    <li class="nav-item">
-                        <a class="btn btn-light btn-sm me-2" href="{{ route('login-form') }}">
-                            <i class="bi bi-box-arrow-in-right me-1"></i>Login
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-light btn-sm" href="{{ route('signup-form') }}">
-                            <i class="bi bi-person-plus me-1"></i>Register
-                        </a>
-                    </li>
+                  
                     @endauth
                 </ul>
             </div>
@@ -138,21 +128,7 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="py-4 mt-5">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="mb-0">&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
-                </div>
-                <div class="col-md-6 text-md-end">
-                    <a href="#" class="text-decoration-none me-3" style="color: #94a3b8;">Privacy Policy</a>
-                    <a href="#" class="text-decoration-none me-3" style="color: #94a3b8;">Terms of Service</a>
-                    <a href="#" class="text-decoration-none" style="color: #94a3b8;">Contact</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>

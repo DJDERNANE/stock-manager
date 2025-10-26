@@ -91,18 +91,7 @@
                 </div>
             </div>
 
-            <!-- Social Login (Optional) -->
-            <div class="card mt-3 shadow-sm">
-                <div class="card-body text-center">
-                    <p class="mb-2">Or login with</p>
-                    <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-outline-dark">
-                            <i class="bi bi-google"></i> Google
-                        </button>
-                        <!-- Add more social buttons as needed -->
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </div>

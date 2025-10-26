@@ -2,11 +2,10 @@
 @section('title', 'Products - ' . config('app.name'))
 @section('content')
 
-
 <div class="table-container">
     <div class="table-header">
         <div class="row align-items-center">
-            <div class="col-md-6 mb-3 mb-md-0">
+            <div class="col-12 col-md-6 mb-3 mb-md-0">
                 <form method="GET" action="{{ route('products.index') }}" id="searchForm" class="search-form">
                     <div class="search-box">
                         <i class="bi bi-search"></i>
@@ -20,13 +19,13 @@
                     </div>
                 </form>
             </div>
-            <div class="col-md-6">
-                <div class="d-flex gap-2 justify-content-md-end items-center">
-                  
-
-                    <a href="{{ route('products.create') }}">
-                        <button class="btn btn-primary border-0 py-2 px-4">
-                            Add Product
+            <div class="col-12 col-md-6">
+                <div class="d-flex gap-2 justify-content-md-end justify-content-start flex-wrap">
+                    <a href="{{ route('products.create') }}" class="w-100 w-md-auto">
+                        <button class="btn btn-primary border-0 py-2 px-4 w-100">
+                            <i class="bi bi-plus-circle d-md-none"></i>
+                            <span class="d-none d-md-inline">Add Product</span>
+                            <span class="d-md-none">Add</span>
                         </button>
                     </a>
                 </div>
@@ -34,90 +33,169 @@
         </div>
     </div>
 
-    <table class="table custom-table">
-        <thead>
-            <tr>
-                <th scope="col">
-                    <input type="checkbox" class="form-check-input">
-                </th>
-                <th scope="col">Product</th>
-                <th scope="col">Price</th>
-                <th scope="col">Stock</th>
-                <th scope="col">Status</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($products as $product)
-            <tr>
-                <td>
-                    <input type="checkbox" class="form-check-input">
-                </td>
-                <td>
+    <!-- Mobile Card View -->
+    <div class="d-md-none">
+        @foreach ($products as $product)
+        <div class="card mobile-product-card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
                     <div class="d-flex align-items-center">
-                        <img src="{{ asset('storage/' . $product->image_url) }}" alt="Product" class="product-image me-3">
+                        <input type="checkbox" class="form-check-input me-2">
+                        <img src="{{ asset('storage/' . $product->image_url) }}" alt="Product" class="product-image-mobile me-3">
                         <div>
-                            <div class="product-name">{{$product->name}}</div>
-                            <div class="product-category">SKU: {{$product->sku}}</div>
+                            <div class="product-name fw-bold">{{$product->name}}</div>
+                            <div class="product-category small text-muted">SKU: {{$product->sku}}</div>
                         </div>
                     </div>
-                </td>
-                <td><span class="price">{{$product->purchase_price}}</span></td>
-                <td>{{$product->quantity}} units</td>
-                <td>
-                    <span class="badge-status 
-                        @if($product->stock_status === 'Out of stock')
-                            badge-out-stock
-                        @elseif($product->stock_status === 'Low')
-                            badge-low-stock
-                        @else
-                            badge-in-stock
-                        @endif
-                    ">
-                        {{ $product->stock_status }}
-                    </span>
-                </td>
-                <td>
-                    <button class="action-btn btn-restock" title="Adjust Stock"
-                        data-bs-toggle="modal"
-                        data-bs-target="#restockModal"
-                        data-product-id="{{ $product->id }}"
-                        data-product-name="{{ $product->name }}"
-                        data-product-quantity="{{ $product->quantity }}">
-                        <i class="bi bi-box-seam"></i>
-                    </button>
-                    <a href="{{ route('products.edit', $product->id) }}">
-                        <button class="action-btn btn-edit" title="Edit">
-                            <i class="bi bi-pencil"></i>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary border-0" type="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-three-dots-vertical"></i>
                         </button>
-                    </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <button class="dropdown-item" 
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#restockModal"
+                                    data-product-id="{{ $product->id }}"
+                                    data-product-name="{{ $product->name }}"
+                                    data-product-quantity="{{ $product->quantity }}">
+                                    <i class="bi bi-box-seam me-2"></i>Adjust Stock
+                                </button>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('products.edit', $product->id) }}"><i class="bi bi-pencil me-2"></i>Edit</a></li>
+                            <li><a class="dropdown-item" href="{{ route('products.history', $product->id) }}"><i class="bi bi-clock-history me-2"></i>History</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <button class="dropdown-item text-danger" 
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    data-product-id="{{ $product->id }}"
+                                    data-product-name="{{ $product->name }}">
+                                    <i class="bi bi-trash me-2"></i>Delete
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="row text-center mb-3">
+                    <div class="col-4">
+                        <div class="small text-muted">Price</div>
+                        <div class="fw-bold price">{{$product->purchase_price}}</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="small text-muted">Stock</div>
+                        <div class="fw-bold">{{$product->quantity}} units</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="small text-muted">Status</div>
+                        <span class="badge-status 
+                            @if($product->stock_status === 'Out of stock')
+                                badge-out-stock
+                            @elseif($product->stock_status === 'Low')
+                                badge-low-stock
+                            @else
+                                badge-in-stock
+                            @endif
+                        ">
+                            {{ $product->stock_status }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
 
-                    <a href="{{ route('products.history', $product->id) }}">
-                        <button class="action-btn btn-edit" title="Edit">
-                            <i class="bi bi-clock-history"></i>
-                        </button>
-                    </a>
-
-                    <button class="action-btn btn-delete" title="Delete"
-                        data-bs-toggle="modal"
-                        data-bs-target="#deleteModal"
-                        data-product-id="{{ $product->id }}"
-                        data-product-name="{{ $product->name }}">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <!-- Desktop Table View -->
+    <div class="d-none d-md-block">
+        <div class="table-responsive">
+            <table class="table custom-table">
+                <thead>
+                    <tr>
+                        <th scope="col" width="50">
+                            <input type="checkbox" class="form-check-input">
+                        </th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Status</th>
+                        <th scope="col" width="150">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($products as $product)
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="form-check-input">
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img src="{{ asset('storage/' . $product->image_url) }}" alt="Product" class="product-image me-3">
+                                <div>
+                                    <div class="product-name">{{$product->name}}</div>
+                                    <div class="product-category">SKU: {{$product->sku}}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td><span class="price">{{$product->purchase_price}}</span></td>
+                        <td>{{$product->quantity}} units</td>
+                        <td>
+                            <span class="badge-status 
+                                @if($product->stock_status === 'Out of stock')
+                                    badge-out-stock
+                                @elseif($product->stock_status === 'Low')
+                                    badge-low-stock
+                                @else
+                                    badge-in-stock
+                                @endif
+                            ">
+                                {{ $product->stock_status }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-1 flex-wrap">
+                                <button class="action-btn btn-restock" title="Adjust Stock"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#restockModal"
+                                    data-product-id="{{ $product->id }}"
+                                    data-product-name="{{ $product->name }}"
+                                    data-product-quantity="{{ $product->quantity }}">
+                                    <i class="bi bi-box-seam"></i>
+                                </button>
+                                <a href="{{ route('products.edit', $product->id) }}">
+                                    <button class="action-btn btn-edit" title="Edit">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                </a>
+                                <a href="{{ route('products.history', $product->id) }}">
+                                    <button class="action-btn btn-history" title="History">
+                                        <i class="bi bi-clock-history"></i>
+                                    </button>
+                                </a>
+                                <button class="action-btn btn-delete" title="Delete"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    data-product-id="{{ $product->id }}"
+                                    data-product-name="{{ $product->name }}">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <div class="table-header border-top">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="text-muted">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+            <div class="text-muted text-center text-md-start">
                 Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} products
             </div>
             <nav>
-                <ul class="pagination mb-0">
+                <ul class="pagination mb-0 pagination-sm">
                     {{-- Previous Page Link --}}
                     @if ($products->onFirstPage())
                     <li class="page-item disabled">
@@ -137,16 +215,16 @@
                     @php
                     $current = $products->currentPage();
                     $last = $products->lastPage();
-                    $start = max($current - 2, 1);
-                    $end = min($current + 2, $last);
+                    $start = max($current - 1, 1); // Show fewer pages on mobile
+                    $end = min($current + 1, $last);
                     @endphp
 
                     @if($start > 1)
-                    <li class="page-item">
+                    <li class="page-item d-none d-md-block">
                         <a class="page-link" href="{{ $products->url(1) }}">1</a>
                     </li>
                     @if($start > 2)
-                    <li class="page-item disabled">
+                    <li class="page-item disabled d-none d-md-block">
                         <span class="page-link">...</span>
                     </li>
                     @endif
@@ -166,11 +244,11 @@
 
                         @if($end < $last)
                             @if($end < $last - 1)
-                            <li class="page-item disabled">
+                            <li class="page-item disabled d-none d-md-block">
                             <span class="page-link">...</span>
                             </li>
                             @endif
-                            <li class="page-item">
+                            <li class="page-item d-none d-md-block">
                                 <a class="page-link" href="{{ $products->url($last) }}">{{ $last }}</a>
                             </li>
                             @endif
@@ -285,6 +363,8 @@
     </div>
 </div>
 
+
+
 <script>
     // Delete Modal
     const deleteModal = document.getElementById('deleteModal');
@@ -389,6 +469,12 @@
                 }
             });
         }
+
+        // Initialize tooltips for mobile
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[title]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
     });
 </script>
 

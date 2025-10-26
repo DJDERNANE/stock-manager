@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/products/{product}/restock', [ProductController::class, 'restock'])->name('products.restock');
     Route::get('/products/{product}/history', [ProductController::class, 'history'])->name('products.history');
     
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

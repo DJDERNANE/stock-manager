@@ -33,28 +33,35 @@
                             <label>Confirm Password</label>
                             <input type="password" name="password_confirmation" class="form-control" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Sign Up</button>
+                        <!-- Submit Button -->
+                        <div class="d-grid mb-3">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-box-arrow-in-right"></i> Sign Up
+                            </button>
+                        </div>
+
+                        <!-- Forgot Password Link -->
+                        <div class="text-center mb-3">
+                            @if (Route::has('password.request'))
+                                <a  class="text-decoration-none">
+                                    Forgot Your Password?
+                                </a>
+                            @endif
+                        </div>
+
+                        <!-- Register Link -->
+                        <div class="text-center">
+                            <p class="mb-0">
+                                Don't have an account? 
+                                <a href="{{ route('signup-form') }}" class="text-decoration-none fw-bold">
+                                    Sign up here
+                                </a>
+                            </p>
+                        </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Social Registration (Optional) -->
-            <div class="card mt-3 shadow-sm">
-                <div class="card-body text-center">
-                    <p class="mb-2">Or sign up with</p>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-                        <button type="button" class="btn btn-outline-dark me-md-2">
-                            <i class="bi bi-google"></i> Google
-                        </button>
-                        <button type="button" class="btn btn-outline-primary me-md-2">
-                            <i class="bi bi-facebook"></i> Facebook
-                        </button>
-                        <button type="button" class="btn btn-outline-dark">
-                            <i class="bi bi-github"></i> GitHub
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
