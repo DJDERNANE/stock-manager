@@ -40,21 +40,14 @@
                             </button>
                         </div>
 
-                        <!-- Forgot Password Link -->
-                        <div class="text-center mb-3">
-                            @if (Route::has('password.request'))
-                                <a  class="text-decoration-none">
-                                    Forgot Your Password?
-                                </a>
-                            @endif
-                        </div>
+                       
 
                         <!-- Register Link -->
                         <div class="text-center">
                             <p class="mb-0">
-                                Don't have an account? 
-                                <a href="{{ route('signup-form') }}" class="text-decoration-none fw-bold">
-                                    Sign up here
+                                you have an account? 
+                                <a href="{{ route('login-form') }}" class="text-decoration-none fw-bold">
+                                    Login here
                                 </a>
                             </p>
                         </div>

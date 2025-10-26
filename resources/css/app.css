@@ -10,174 +10,188 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-    .card {
-        border: none;
-        border-radius: 15px;
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-bottom: 1px solid #eaeaea;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    border: none;
+    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #0056b3, #004085);
+    transform: translateY(-1px);
+    transition: all 0.3s ease;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 2px solid #eaeaea;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.mobile-product-card {
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-image-mobile {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-image {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* Responsive table actions */
+.action-btn {
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+}
+
+/* Responsive badges */
+.badge-status {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.badge-in-stock {
+    background-color: #d1fae5;
+    color: #065f46;
+}
+
+.badge-low-stock {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.badge-out-stock {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Search box responsive */
+.search-box {
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+
+.search-box .form-control {
+    padding-left: 40px;
+}
+
+/* Table responsive */
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.custom-table th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 12px 8px;
+}
+
+.custom-table td {
+    padding: 12px 8px;
+    vertical-align: middle;
+}
+
+/* Pagination responsive */
+.pagination-sm .page-link {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+}
+
+/* Button responsive */
+.btn {
+    font-size: 0.875rem;
+    width: 200px !important;
+}
+
+#searchInput {
+    width: 100% !important;
+}
+
+@media (max-width: 768px) {
+    .table-header {
+        padding: 1rem;
     }
-    
-    .card-header {
-        border-bottom: 1px solid #eaeaea;
-        border-radius: 15px 15px 0 0 !important;
-    }
-    
-    .btn-primary {
-        background: linear-gradient(45deg, #007bff, #0056b3);
-        border: none;
-        border-radius: 8px;
-    }
-    
-    .btn-primary:hover {
-        background: linear-gradient(45deg, #0056b3, #004085);
-        transform: translateY(-1px);
-        transition: all 0.3s ease;
-    }
-    
-    .form-control {
-        border-radius: 8px;
-        padding: 12px 15px;
-        border: 2px solid #eaeaea;
-    }
-    
-    .form-control:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-    .mobile-product-card {
-        border: 1px solid #e9ecef;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    
-    .product-image-mobile {
-        width: 50px;
-        height: 50px;
-        object-fit: cover;
-        border-radius: 8px;
-    }
-    
-    .product-image {
-        width: 40px;
-        height: 40px;
-        object-fit: cover;
-        border-radius: 6px;
-    }
-    
-    /* Responsive table actions */
-    .action-btn {
-        width: 35px;
-        height: 35px;
-        border: none;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.875rem;
-    }
-    
-    /* Responsive badges */
-    .badge-status {
-        padding: 4px 8px;
-        border-radius: 12px;
-        font-size: 0.75rem;
-        font-weight: 500;
-    }
-    
-    .badge-in-stock { background-color: #d1fae5; color: #065f46; }
-    .badge-low-stock { background-color: #fef3c7; color: #92400e; }
-    .badge-out-stock { background-color: #fee2e2; color: #991b1b; }
-    
-    /* Search box responsive */
-    .search-box {
-        position: relative;
-    }
-    
-    .search-box i {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #6c757d;
-    }
-    
+
     .search-box .form-control {
-        padding-left: 40px;
+        font-size: 16px;
+        /* Prevent zoom on iOS */
     }
-    
-    /* Table responsive */
-    .table-responsive {
-        border-radius: 10px;
-        overflow: hidden;
+
+    .mobile-product-card .card-body {
+        padding: 1rem;
     }
-    
-    .custom-table th {
-        background-color: #f8f9fa;
-        border-bottom: 2px solid #dee2e6;
+
+    .product-name {
+        font-size: 0.9rem;
+    }
+
+    .product-category {
+        font-size: 0.8rem;
+    }
+
+    .price {
+        font-size: 0.9rem;
         font-weight: 600;
-        font-size: 0.875rem;
-        padding: 12px 8px;
     }
-    
-    .custom-table td {
-        padding: 12px 8px;
-        vertical-align: middle;
+}
+
+@media (max-width: 576px) {
+    .d-flex.gap-2 {
+        gap: 0.5rem !important;
     }
-    
-    /* Pagination responsive */
-    .pagination-sm .page-link {
-        padding: 6px 12px;
-        font-size: 0.875rem;
-    }
-    
-    /* Button responsive */
+
     .btn {
-        font-size: 0.875rem;
-        width: 200px !important;
+        padding: 8px 16px;
     }
-    #searchInput{
-        width: 100% !important;
+
+    .modal-dialog {
+        margin: 10px;
     }
-    
-    @media (max-width: 768px) {
-        .table-header {
-            padding: 1rem;
-        }
-        
-        .search-box .form-control {
-            font-size: 16px; /* Prevent zoom on iOS */
-        }
-        
-        .mobile-product-card .card-body {
-            padding: 1rem;
-        }
-        
-        .product-name {
-            font-size: 0.9rem;
-        }
-        
-        .product-category {
-            font-size: 0.8rem;
-        }
-        
-        .price {
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
+
+    .modal-content {
+        border-radius: 10px;
     }
-    
-    @media (max-width: 576px) {
-        .d-flex.gap-2 {
-            gap: 0.5rem !important;
-        }
-        
-        .btn {
-            padding: 8px 16px;
-        }
-        
-        .modal-dialog {
-            margin: 10px;
-        }
-        
-        .modal-content {
-            border-radius: 10px;
-        }
-    }
+}
