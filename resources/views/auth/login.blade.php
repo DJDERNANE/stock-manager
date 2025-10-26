@@ -108,43 +108,6 @@
 </div>
 @endsection
 
-@push('styles')
-<style>
-    .card {
-        border: none;
-        border-radius: 15px;
-    }
-    
-    .card-header {
-        border-bottom: 1px solid #eaeaea;
-        border-radius: 15px 15px 0 0 !important;
-    }
-    
-    .btn-primary {
-        background: linear-gradient(45deg, #007bff, #0056b3);
-        border: none;
-        border-radius: 8px;
-    }
-    
-    .btn-primary:hover {
-        background: linear-gradient(45deg, #0056b3, #004085);
-        transform: translateY(-1px);
-        transition: all 0.3s ease;
-    }
-    
-    .form-control {
-        border-radius: 8px;
-        padding: 12px 15px;
-        border: 2px solid #eaeaea;
-    }
-    
-    .form-control:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-    }
-</style>
-@endpush
-
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {

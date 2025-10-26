@@ -1,21 +1,7 @@
 @extends('layouts.base')
 @section('title', 'Dashboard - ' . config('app.name'))
 @section('content')
-<style>
-    .stats-card {
-    background: white;
-    border-radius: 10px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    border-left: 4px solid #667eea;
-    transition: transform 0.2s;
-}
 
-.stats-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-</style>
 <div class="row mb-4">
     <div class="col-md-3 mb-3">
         <div class="stats-card">

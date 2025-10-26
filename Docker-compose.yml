@@ -1,17 +1,17 @@
 version: '3.8'
 
 services:
-  app:
-    build: .
-    container_name: stock-manager
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./:/var/www
-    depends_on:
-      - postgres
-    env_file:
-      - .env
+  # app:
+  #   build: .
+  #   container_name: stock-manager
+  #   ports:
+  #     - "8000:8000"
+  #   volumes:
+  #     - ./:/var/www
+  #   depends_on:
+  #     - postgres
+  #   env_file:
+  #     - .env
 
   postgres:
     image: postgres:15
@@ -23,7 +23,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/db_data
 
 volumes:
-  postgres_data:
+  db_data:
