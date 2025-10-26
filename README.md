@@ -85,7 +85,7 @@ PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=
 docker compose up -d --build
 
 ### 3. run migrations 
-docker exec stock-manager  migrate
+docker exec stock-manager php artisan migrate  migrate
 
 ### 4. key generation 
 docker exec stock-manager-app php artisan key:generate
