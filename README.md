@@ -88,14 +88,10 @@ docker compose up -d --build
 docker exec stock-manager php artisan migrate  migrate
 
 ### 4. key generation 
-docker exec stock-manager-app php artisan key:generate
+docker exec stock-manager php artisan key:generate
 
 ### 5. Créer le lien de stockage
-docker exec stock-manager-app php artisan storage:link
-
-
-### 6. Install and configure Laravel Passport
-docker exec stock-manager-app php artisan passport:install
+docker exec stock-manager php artisan storage:link
 
 
 ### Copy the generated Client ID and Secret to your `.env`:
@@ -105,9 +101,6 @@ PASSPORT_PERSONAL_ACCESS_CLIENT_ID=1
 PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=your_generated_secret
 ```
 
-### 7. Create storage link for images
-
-docker exec stock-manager-app php artisan storage:link
 
 ## 📚 API Documentation (we have only get products end point , the others are blade templates in the laravel app)
 
